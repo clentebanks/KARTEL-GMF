@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blog oficial de KARTEL GMF - Últimas noticias sobre Hip Hop, Reggaetón, Trap y más.">
+    <meta name="keywords" content="KARTEL GMF, blog musical, comentarios de fans, noticias de música, Hip Hop, Reggaetón, Trap">
+    <meta name="author" content="KARTEL GMF">
+    <title>Blog de KARTEL GMF</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            background-color: #000;
+        }
+        .navbar-brand {
+            color: #fff !important;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .blog-title {
+            background-color: #111;
+            padding: 50px 0;
+            text-align: center;
+        }
+        .blog-title h1 {
+            color: #ff0000;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        .blog-post {
+            background-color: #222;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+        .blog-post h2 {
+            color: #ff0000;
+        }
+        .comment-section {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .comment-section h3 {
+            color: #ff0000;
+        }
+        .comment-form input, .comment-form textarea {
+            background-color: #222;
+            color: #fff;
+            border: 1px solid #555;
+            margin-bottom: 10px;
+        }
+        .btn-custom {
+            background-color: #b22222; /* Botón rojo oscuro */
+            color: #ffffff;
+        footer {
+            background-color: #111;
+            padding: 20px 0;
+            color: #aaa;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">KARTEL GMF</a>
+        </div>
+    </nav>
+
+    <!-- Blog Title -->
+    <div class="blog-title">
+        <h1>Bienvenido al Blog de KARTEL GMF</h1>
+        <p>Comparte tus comentarios y sigue nuestras últimas novedades en el mundo de la música.</p>
+    </div>
+
+    <!-- Blog Post Section -->
+    <div class="container py-5">
+        <div class="blog-post">
+            <h2>Última Entrada del Blog: Nuevo Álbum en Proceso</h2>
+            <p>Estamos emocionados de anunciar que nuestro próximo álbum está en camino. Mantente atento para más detalles sobre la fecha de lanzamiento y colaboraciones especiales.</p>
+        </div>
+
+        <!-- Comment Section -->
+        <div class="comment-section">
+            <h3>Deja tu comentario</h3>
+            <form class="comment-form" id="commentForm">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="name" placeholder="Tu Nombre" required>
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="email" placeholder="Tu Correo Electrónico" required>
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" id="comment" rows="4" placeholder="Tu Comentario" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-custom">Enviar Comentario</button>
+            </form>
+
+            <!-- Display Comments -->
+            <div id="commentsSection" class="mt-4">
+                <h3>Comentarios Recientes</h3>
+                <ul id="commentsList" class="list-unstyled"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 KARTEL GMF - Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- JavaScript para comentarios con LocalStorage -->
+    <script>
+        // Función para obtener los comentarios del localStorage
+        function getComments() {
+            let comments = localStorage.getItem('comments');
+            return comments ? JSON.parse(comments) : [];
+        }
+
+        // Función para guardar los comentarios en localStorage
+        function saveComment(comment) {
+            let comments = getComments();
+            comments.push(comment);
+            localStorage.setItem('comments', JSON.stringify(comments));
+        }
+
+        // Función para mostrar los comentarios guardados
+        function displayComments() {
+            const commentsList = document.getElementById('commentsList');
+            commentsList.innerHTML = '';  // Limpiar la lista actual
+            const comments = getComments();
+            comments.forEach(comment => {
+                const commentItem = document.createElement('li');
+                commentItem.innerHTML = `<strong>${comment.name}</strong> (${comment.email}): <p>${comment.text}</p>`;
+                commentsList.appendChild(commentItem);
+            });
+        }
+
+        // Función para manejar el envío del formulario de comentarios
+        document.getElementById('commentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const text = document.getElementById('comment').value;
+
+            // Crear el objeto del comentario
+            const comment = { name, email, text };
+
+            // Guardar el comentario en localStorage
+            saveComment(comment);
+
+            // Mostrar los comentarios actualizados
+            displayComments();
+
+            // Limpiar el formulario
+            document.getElementById('commentForm').reset();
+        });
+
+        // Mostrar los comentarios al cargar la página
+        document.addEventListener('DOMContentLoaded', displayComments);
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
